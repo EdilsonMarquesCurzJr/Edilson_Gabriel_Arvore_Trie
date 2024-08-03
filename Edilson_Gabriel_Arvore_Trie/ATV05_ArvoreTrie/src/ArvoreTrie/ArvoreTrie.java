@@ -15,14 +15,31 @@ public class ArvoreTrie {
 
     public void inserirElemento(String palavra) {
         No_Trie percorrer = this.raiz;
+
+        // Normaliza e remove acentos
         palavra = Normalizer.normalize(palavra, Form.NFD).replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+
         if (verificaNumeros(palavra)) {
             if (revers) {
                 palavra = new StringBuilder(palavra).reverse().toString();
             }
             char[] vetorPalavra = palavra.toLowerCase().toCharArray();
+
             for (char caractere : vetorPalavra) {
+                // Verifica se o caractere é alfabético
+                if (caractere < 'a' || caractere > 'z') {
+                    System.out.println("Caractere inválido na palavra: " + caractere);
+                    return;
+                }
+
                 int indice = caractere - 'a';
+
+                // Verifica se o índice está dentro do intervalo
+                if (indice < 0 || indice >= 26) {
+                    System.out.println("Índice fora dos limites permitido para o caractere: " + caractere);
+                    return;
+                }
+
                 if (percorrer.filhosDoNo[indice] == null) {
                     No_Trie novoElemento = new No_Trie(caractere);
                     percorrer.filhosDoNo[indice] = novoElemento;
@@ -192,10 +209,12 @@ public class ArvoreTrie {
     private void exibirPalavrasPrefixo(String prefixo, String palavraParcial, No_Trie percorrer) {
         if (percorrer != null) {
             if (percorrer.isFimDePalavra()) {
-                System.out.println("[" + prefixo + palavraParcial + "]");
+                String palavra = new StringBuilder(prefixo + palavraParcial). reverse().toString();
+                System.out.println("[" + palavra + "]");
             }
             for (int i = 0; i < 26; i++) {
                 if (percorrer.filhosDoNo[i] != null) {
+
                     exibirPalavrasPrefixo(prefixo, palavraParcial + percorrer.filhosDoNo[i].getLetra(), percorrer.filhosDoNo[i]);
                 }
             }
