@@ -27,7 +27,7 @@ public class Main {
             String limpa = limparTexto(dado);
             if (!limpa.isEmpty()) {
                 arvoreNormal.inserirElemento(limpa);
-                arvoreInvertida.inserirElemento(new StringBuilder(limpa).reverse().toString());
+                arvoreInvertida.inserirElemento(limpa);
             }
         }
 
@@ -53,8 +53,7 @@ public class Main {
                 case 2:
                     System.out.println("Informe o sufixo:");
                     palavra = scan.nextLine();
-                    String sufixoInvertido = new StringBuilder(palavra).reverse().toString();
-                    arvoreInvertida.exibirPalavrasPrefixo(sufixoInvertido);
+                    arvoreInvertida.exibirPalavrasPrefixo(new StringBuilder(palavra).reverse().toString());
                     break;
                 case 0:
                     System.out.println("Saindo...");
