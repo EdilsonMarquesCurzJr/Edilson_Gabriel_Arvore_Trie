@@ -1,0 +1,171 @@
+A árvore trie é um tipo de árvore feita para registrar palavras, ou seja, strings. Ela funciona mais eficientemente com esse
+tipo de dado embora seja utilizada em outros casos também(um bom exemplo para o seu uso seria o registro de palavras de um
+dicionário).
+Uma das vantagens da árvore do tipo trie é a sua eficiência na busca. É quase o mesmo que efetuar, no máximo, um número
+de comparações igual ao número de letras de uma palavra buscada.
+É uma árvore projetada para a recuperação rápida de informações.
+No caso desse tipo de árvore, os seus nós terão apenas caracteres guardados neles. Cada nó terá apenas um caractere.
+Para verificarmos se um conjunto de nós sequenciais(conectados uns aos ontros) forma uma palavra, o caractere
+que representa o final de uma palavra terá um indicador booleano true.
+Exemplo: no caso da palavra "AMOR", sua última letra será "R". No nó que guarda o caractere "R" de "AMOR", haverá
+um campo booleano marcado como "true" para indicar que ali se forma uma palavra se seguirmos a ordem letra a letra.
+             RAIZ
+            /
+          A - false
+          |
+          M - false
+          |
+          O - false
+          |
+          R - true
+Note que onde há o true, significa que se tomarmos todos os nós desconsiderando a raiz, formaremos uma palavra.
+
+A árvore Trie em sua implementação possui suas operações fundamentais e algumas adicionais:
+
+1.Inserir Elemento
+inserirElemento obedece o seguinte procedimento:
+A)Recebe como parâmetro a palavra que será inserida na árvore.
+B)Criamos um nó genérico para percorrermos a árvore inteira.
+C)Dividimos a string que recebemos em um vetor de caracteres utilizando "toCharArray". Note que também utilizamos a ferramenta
+"toLowerCase" para transformarmos todos os caracteres em minúsculo(o que será importante)
+D)Utilizando um laço for para iterar sobre todas as posições do vetor de caracteres criado anteriormente, faremos agora
+uma operação utilizando dois caracteres.
+Onde há "indice = caractere - 'a'" é possível notar que estamos fazendo uma subtração de dois caracteres. Isso só é possível
+por conta dos valores na tabela ASCII, onde geralmente a = 97, b = 98, c = 99... e assim de maneira sucessiva até completarmos
+as 26 letras do alfabeto terminando em 122. Esse resultado de índice obtido através dessa operação será importante pois o
+vetor criado na classe "No_Trie" possui 26 posições correspondentes às 26 letras do alfabeto, e nesse caso, cada letra
+sempre ocupará um espaço específico nesse vetor, ou seja:a = 0, b = 1, c = 2...
+Esse procedimento serve principalmente para evitarmos de fazer muitas comparações e corrermos direto para o índice correspondente
+ao seu valor a partir da operação de subtração realizada.
+E)Se o índice calculado correspondente não estiver ocupado, isso significa que a letra em questão ainda não foi registrada
+naquele nível da árvore e será inserida diretamente naquela posição. Caso contrário, a letra já existe, isso significa que 
+podemos apenas passar para a próxima letra iterando novamente até inserirmos todas elas mediante ao mesmo procedimento.
+No final, precisamos lembrar de estabelecer a variável "FimDePalavra" para "true", indicando que uma palavra inteira foi
+inserida.
+
+2.Exibir palavras
+O método exibirPalavras utiliza uma abordagem recursiva para imprimir todas as palavras da árvore Trie.
+Para fazer a chamada desse método dentro da função main, não é necessário passar nenhum parâmetro, pois o método
+chama "exibirPalavras" com parâmetros dentro da classe "ArvoreTrie". Os parâmetros iniciais são uma string vazia
+chamada "palavra" e o ponteiro para a raiz da árvore("this.raiz").
+O método para exibir recebe esses dois parâmetros e verifica se "percorrer" é nulo. Se for nulo, não possui conteúdo
+para ser armazenado. Caso contrário, a condição é satisfeita, e então "palavra" pode receber o caractere armazenado pelo
+nó "percorrer". Em seguida, dentro da condição "(percorrer != null)", verificamos logo em seguida se a variável booleana
+"fimDePalavra" é verdadeira. Se for,significa que a string "palavra" agora armazena uma palavra inteira e pode ser exibida
+na tela. Por fim, a função chama a si mesma recursivamente para verificar todas as 26 posições de cada filho(correspondente
+ao tamanho do vetor "filhosDoNo".) para formar as palavras.
+
+
+3.Verificar se palavras existem na árvore
+O método verificaPalavra funciona da seguinte maneira:Uma palavra qualquer é passada por parâmetro para verificarmos
+se ela existe ou não na árvore.
+Em seguida, transformamos a palavra em um vetor de caracteres(lembrando sempre de colocar todos os caracteres minúsculos
+através do "toLowerCase")para facilitar as consultas posição por posição. Em sequência, ao criarmos um nó auxiliar
+para percorrer toda a árvore, entramos em um laço "for" que itera apenas sobre as letras da palavra. Posição a posição
+calculamos um índice utilizando o caractere armazenado na posição "i" do vettor e fazemos o cálculo desse índice
+no vetor de 26 posições "filhosDoNo"(começando pela raiz). Se esse índice existir e o conteúdo armazenado no nó que
+corresponde a esse índice for igual ao caractere armazenado no vetor "charPalavra", o mesmo processo se repete(isso
+significa que PELO MENOS a primeira letra da palavra buscada existe na árvore) para verificarmos as demais letras.
+Se em qualquer instância esses caracteres não forem iguais, isso significa que a palavra não existe e retornamos
+imediatamente sem a necessidade de verificarmos o resto dos caracteres.
+Ainda há uma última verificação ao sairmos do laço "for":"if (percorrer.isFimDePalavra() == true)". Essa verificação
+serve para sabermos se o último caractere da palavra passada por parâmetro corresponde a um final de palavra 
+dentro da árvore indicado pela variável "fimDePalavra". Se for verdadeiro, significa que representa uma palavra completa.
+Essa verificação é necessária pois assim evitamos retornar "subpalavras" e retornarmos apenas palavras inteiras.
+EXEMPLO: Inserindo a palavra "alho" na árvore e buscando por "alh"(que é uma subpalavra), sem a verificação booleana
+do último caractere(nesse caso "h"), o retorno seria positivo, ou seja, diria que a palavra "alh" existe na árvore, o
+que não é verdade. Com a verificação, garantimos que "h" não representa nenhum fim de palavra, por isso a palavra, ou
+está escrita pela metade, ou não existe na árvore.
+
+4.Remover uma palavra da árvore
+removerElemento precisa de uma palavra passada como parâmetro. Verifica se a palavra existe na árvore. Se existir, fará
+os seguintes procedimentos: primeiro criamos um "Trie_Node percorrer" para chegarmos até o último caractere da palavra.
+Criamos também uma variável "caminho" para armazenar esses caracteres para podermos voltar neles iteração pós iteração.
+Utilizanado a estratégia de cálculo do índice(caractere por caractere) dentro do primeiro loop "for", a variável
+"caminho" agora possui todos os caracteres que precisa e o "Nodo_Trie percorrer" que criamos agora aponta para o último
+caractere da palavra.
+Sendo assim, fora do loop "for", determinamos o booleano "fimDePalavra" para falso, uma vez que não representa mais o
+fim de uma palavra e será removido da árvore.
+Agora, utilizando a variável "caminho", precisamos fazer o seguinte procedimento:dentro de um loop "while(caminho > 0)"
+Calculamos agorar um novo índice para caminharmos novamente até o último caractere da palavra. 
+Em seguida, precisamos remover esse caractere da variável "caminhos" utilizando o método "substring" que removerá sua 
+última letra, deixando a variável em questão com uma letra a menos.
+Em seguida, utilizamos o método "verificaFilhos" para sabermos se o nó "percorrer" em questão possui mais de um filho.
+Se possuir mais de um filho, não podemos removê-lo, já que isso indica que ele faz parte de outra palavra. Caso contrário,
+podemos removê-lo sem problemas. Em seguida, "percorrer" volta para o topo da árvore, sendo reiniciado com o endereço da raiz.
+Sendo assim, um último loop while acontece, para posicioná-lo para a nova "última letra". Uma vez que a variável "caminho"
+possui um caractere a menos, isso significa que a nova "última letra" agora é a penúltima letra da palavra original. 
+O processo se repete até que "caminhos" seja igual a 0(não possua mais nenhum caractere para ser removido).
+
+5.Alterar uma palavra existente na árvore:
+O método de alteração existe em função de "inserirElemento" e "removerElemento". Se a ideia é remover um elemento
+e colocar outro em seu lugar, em outras palavras, estaremos inserindo um elemento e colocando outro ali. Por conta
+da natureza da chave, é possível que, em muitas vezes, ao alterarmos um elemento, ele não fique exatamente ajustado
+no mesmo lugar da árvore. Imagine que queremos remover a palavra "amor" e inserirmos a palavra "macarrao". Ela definitivamente
+(por conta da sua primeira letra), não ficará imediatamente no lugar de "amor". Sendo assim, precisamos apenas remover
+"amor" e inserirmos "macarrao" na árvore. O efeito será o mesmo.
+
+
+6.Listar palavras começadas em uma letra específica:
+O método em questão serve para listarmos todas as palavras que iniciam com uma letra específica. Ele funciona recursivamente
+pois seria difícil conseguir visitar todos os nós considerando que cada "No_Trie" pode ter ATÉ 26 filhos. Para coletarmos 
+letra a letra, primeiro invocamos um método intermediário de nome "exibirPalavrasComecadasEm" passando como parâmetro
+apenas a letra inicial das palavras. Logo em seguida, esse método invoca outro método de mesmo nome, mas inicializando
+algumas variáveis que deverão ser passadas como parâmetros. A começar pelo índice da letra em questão, realizando a 
+operação aritimética a partir da tabela ASCII(que já conhecemos)  "int indiceInicial = letra - 'a';". Com o índice
+incial, ou seja, o índice preciso da primeira letra que queremos encontrar, enviamos como parâmetros um "No_Trie per-
+correr", mas não o nó, apenas o filho deste nó na posição "índice" que calculamos anteriormente. Junto dele, o próprio
+"índice" e uma string "palavra" que serve para concatenar todos os caracteres e exibi-los na tela mediante indicações.
+Dentro do outro método "exibirPalavrasComecadasEm",  verificamos se "percorrer" é diferente de null(é quase nossa
+condição de parada, uma vez que for null, nada acontecerá). Se for diferente de null, concatenamos o primeiro
+caractere armazenado naquele nó e logo em seguida verificamos de a variável booleana "fimDePalavra" está marcada como
+"true". Se estiver, significa que "palavra" possui caracteres o suficiente para ser considerada uma palavra e automa-
+ticamente será exibida na tela.
+Utilizando elementos recursivos, dentro de um laço "for" de tamanho 26, verificamos os filhos do nó atual. Se qualquer
+um deles for diferente de "null", significa que existe algum conteúdo ali, e possivelmente um caractere que deverá ser 
+concatenado para formar outra palavra. Sendo assim, PRECISAMOS calcular um novo índice utilizando o "i" diferente de 
+"null" que já encontramos. Com o novo índice calculado, agora chamamos o mesmo método recursivamente passando
+como parâmetros o "filho" do nó atual na posição que encontramos(diferente de null), a palavra incompleta e o
+novo índice calculado.
+
+7.Buscar elemento:
+O método buscarElemento utiliza dois métodos de mesmo nome. Um deles serve para fazer a chamada inicial da função.
+Dentro dessa função, verificamos se a palavra possui algum caractere irregular ao utilizar o método "verificaNumeros", que
+apesar do nome, verifica a existência de números e caracteres especiais na string passada por parâmetro. Se o elemento
+não for irregular, poderemos chamar o método seguinte de mesmo nome, passando como parâmetro a raiz da árvore e 
+a palavra buscada.
+Agora, precisamos verificar se a palavra existe dentro da árvore através do método "verificaPalavra", que possui um retorno
+booleano. Se o retorno for verdadeiro, a condição "if" é satisfeita e portanto, a palavra existe na árvore. Como de
+costume, transformamos a string em um vetor de caracteres para facilitar a comparação nó a nó dentro da árvore. Utilizando
+o cálculo de índice a partir da tabela ASCII, sabemos precisamente onde se encontra o índice do primeiro caractere dessa
+palavra dentro da árvore e por isso poderemos acessá-lo. Sendo assim, a variável do tipo "No_Trie" "percorrer", após
+esse procedimento, recebe esse endereço. O loop se encerra assim que "i" for maior ou igual ao tamanho do vetor de caracteres.
+Fora do loop, fazemos então uma última verificação. Note que "percorrer" está apontado para o suposto último caractere da
+palavra. Dentro deste nó, fazemos a seguinte verificação " if(percorrer.isFimDePalavra() == true)". Se o resultado
+dessa operação for verdadeiro, isso significa que encontramos uma palavra completa e podemos retornar a string com
+certeza de que ela foi extraída corretamente da árvore.
+
+8.Exibir palavras começadas em algum prefixo específico:
+Pensando em uma das utilidades da árvore Trie, o método para exibir palavras começadas em algum prefixo específico
+utiliza apenas um "pedaço de palavra" passsada como parâmetro para verificar quais outas palavras possuem esse "pedaço".
+Exemplo: 
+palavras existentes na árvore:mamão, abacate, coração, corcovado, corrente
+exibirPalavrasPrefiro("cor") ->O método retornará na tela todas as palavras começadas em "cor"
+A saída será "coracao, corcovado, corrente"
+Sendo assim, existe um método intermediário de mesmo nome(exibirPalavrasPrefixo) que serve apenas para verificar 
+se existe algum caractere especial no prefixo passado. Se ele existir, uma advertência será disparada no console para 
+que o usuário saiba o que está acontecendo.
+Caso contrário, o prefixo é particionado em um vetor de caracteres e utilizando o seu tamanho, verificamos 
+posição a posição se o caractere em questão existe na árvore. Vale ressaltar que a posição do caractere
+influencia diretamente no resultado desta operação. Se a ordem do prefixo for "cor" e inserirmos "roc", ainda que sejam
+as mesmas letras, a posição dessas letras na árvore não permitirá que a condição seja satisfeita
+"(if (percorrer.filhosDoNo[indice] == null || percorrer.filhosDoNo[indice].equals(charPrefixo[i]))", pois, no caso
+do prefixo r o c, "charPrefixo[0]" = "r", ou seja, o índice calculado deverá encontrar "r" para prosseguir. Se encontrar
+qualquer coisa diferente de "r" ou um espaço vazio("null"), a função será imediatamente interrompida, pois o prefixo
+não existe dentro da árvore.
+Com a chamada recursiva do método, precisamos verificar apenas se "percorrer"(o nó atual) é diferente de nulo, pois
+esta será a condição de parada. Se for diferente de nulo, verificamos se em sua posição o booleano "fimDePalavra" é 
+verdadeiro. Se for, significa que até o momento, existe uma palavra que pode ser exibida e a condição é satisfeita.
+Em sequência, precisamos verificar todos os filhos desse nó para sabermos se existe ali algum caractere a ser visitado.
+Se este caractere existir, a função chama a si mesmo recursivamente passando o endereço deste filho como parâmetro e 
+a palavra parcial formada até o momento com o conjunto de caracteres capturados até então.

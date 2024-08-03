@@ -1,0 +1,65 @@
+INSERIR; tomate
+INSERIR; alface
+INSERIR; cenoura
+INSERIR; cebola
+INSERIR; pepino
+INSERIR; couve
+EXCLUIR; cenoura
+EXCLUIR; pepino
+BUSCARPREFIXO; ce
+BUSCARLETRA; a
+BUSCARLETRA; C
+BUSCARPREFIXO; to
+IMPRIMIR;
+INSERIR; melancia
+INSERIR; melão
+INSERIR; maçã
+INSERIR; morango
+INSERIR; uva
+INSERIR; pêssego
+EXCLUIR; morango
+EXCLUIR; maçã
+BUSCARPREFIXO; me
+BUSCARLETRA; u
+BUSCARLETRA; M
+BUSCARPREFIXO; pe
+IMPRIMIR;
+INSERIR; abóbora
+INSERIR; abacaxi
+INSERIR; abacate
+INSERIR; abobrinha
+INSERIR; ameixa
+INSERIR; amendoim
+EXCLUIR; abacaxi
+EXCLUIR; abóbora
+BUSCARPREFIXO; abo
+BUSCARLETRA; a
+BUSCARLETRA; A
+BUSCARPREFIXO; ame
+IMPRIMIR;
+INSERIR; batata-doce
+INSERIR; batatinha
+INSERIR; beterraba
+INSERIR; brócolis
+INSERIR; banana
+INSERIR; bife
+EXCLUIR; beterraba
+EXCLUIR; bife
+BUSCARPREFIXO; bat
+BUSCARLETRA; b
+BUSCARLETRA; B
+BUSCARPREFIXO; bro
+IMPRIMIR;
+INSERIR; chocolate
+INSERIR; chicória
+INSERIR; chuchu
+INSERIR; champignon
+INSERIR; chantilly
+INSERIR; chá
+EXCLUIR; chicória
+EXCLUIR; chuchu
+BUSCARPREFIXO; cho
+BUSCARLETRA; c
+BUSCARLETRA; C
+BUSCARPREFIXO; cham
+IMPRIMIR;
