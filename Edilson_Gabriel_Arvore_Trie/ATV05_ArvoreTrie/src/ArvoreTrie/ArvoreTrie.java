@@ -263,7 +263,7 @@ public class ArvoreTrie {
 
 
     private boolean verificaFilhos (No_Trie percorrer,int indice){
-            if (percorrer != null) {
+            if (percorrer != null && percorrer.filhosDoNo[indice] != null ) {
                 if (percorrer.filhosDoNo[indice].isFimDePalavra()) {
                     return false;
                 }
