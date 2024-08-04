@@ -75,7 +75,6 @@ public class Main {
                     System.out.println("Informe o sufixo: ");
                     palavra = scan.nextLine();
                     arvoreInvertida.exibirPalavrasSufixo(palavra);
-                    arvoreInvertida.exibirPalavrasPrefixo(new StringBuilder(palavra).reverse().toString());
                     break;
 
                 case 4: //INSERIR
@@ -90,6 +89,7 @@ public class Main {
                     System.out.println("Informe o composto que deseja remover:");
                     palavra = scan.nextLine();
                     arvoreNormal.removerElemento(palavra);
+                    palavra = new StringBuilder(palavra).reverse().toString();
                     arvoreInvertida.removerElemento(palavra);
 
                 default:

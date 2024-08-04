@@ -67,7 +67,7 @@ public class ArvoreTrie {
                     percorrer = percorrer.filhosDoNo[indice];
                 }
                 percorrer.setFimDePalavra(false);
-                while (caminho.length() > 0) {
+                while (!caminho.isEmpty()) {
                     int indice = caminho.charAt(caminho.length() - 1) - 'a';
                     caminho = caminho.substring(0, caminho.length() - 1);
                     if (verificaFilhos(percorrer, indice)) {
