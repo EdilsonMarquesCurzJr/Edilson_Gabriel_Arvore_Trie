@@ -74,11 +74,8 @@ public class Main {
                 case 3:// BUSCA POR SUFIXO
                     System.out.println("Informe o sufixo: ");
                     palavra = scan.nextLine();
-<<<<<<< HEAD
                     arvoreInvertida.exibirPalavrasSufixo(palavra);
-=======
                     arvoreInvertida.exibirPalavrasPrefixo(new StringBuilder(palavra).reverse().toString());
->>>>>>> bffc23afe4a8eeb5af29d615556b7ce6228cce6c
                     break;
 
                 case 4: //INSERIR
