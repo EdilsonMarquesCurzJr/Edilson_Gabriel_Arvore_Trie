@@ -47,7 +47,7 @@ public class ArvoreTrie {
                 percorrer = percorrer.filhosDoNo[indice];
             }
             percorrer.setFimDePalavra(true);
-            System.out.println("[" + palavra + "] inserido com sucesso na árvore.");
+            //System.out.println("[" + palavra + "] inserido com sucesso na árvore.");
             this.quantidadeDePalavras++;
         } else {
             System.out.println("Não foi possível inserir [" + palavra + "] na árvore. Verifique se existe algum número ou caractere especial no meio da palavra.");
@@ -189,6 +189,7 @@ public class ArvoreTrie {
 
     public void exibirPalavrasPrefixo(String prefixo) {
         No_Trie percorrer = this.raiz;
+        // BUSCA POR PREFIXO EM ARVORE NAO REVERSA
         if (verificaNumeros(prefixo)) {
             char[] charPrefixo = prefixo.toCharArray();
             for (int i = 0; i < charPrefixo.length; i++) {
@@ -206,10 +207,10 @@ public class ArvoreTrie {
         }
     }
 
-    private void exibirPalavrasPrefixo(String prefixo, String palavraParcial, No_Trie percorrer) {
+    private void exibirPalavrasPrefixo (String prefixo, String palavraParcial, No_Trie percorrer){
         if (percorrer != null) {
             if (percorrer.isFimDePalavra()) {
-                String palavra = new StringBuilder(prefixo + palavraParcial). reverse().toString();
+                String palavra = prefixo + palavraParcial;
                 System.out.println("[" + palavra + "]");
             }
             for (int i = 0; i < 26; i++) {
@@ -221,25 +222,65 @@ public class ArvoreTrie {
         }
     }
 
-    private boolean verificaFilhos(No_Trie percorrer, int indice) {
-        if (percorrer != null) {
-            if (percorrer.filhosDoNo[indice].isFimDePalavra()) {
-                return false;
+
+    public void exibirPalavrasSufixo(String sufixo) {
+        if (revers) {
+            sufixo = new StringBuilder(sufixo).reverse().toString();
+            if (verificaNumeros(sufixo)) {
+                No_Trie percorrer = this.raiz;
+                char[] charSufixo = sufixo.toCharArray();
+                for (int i = 0; i < charSufixo.length; i++) {
+                    int indice = charSufixo[i] - 'a';
+                    if (percorrer.filhosDoNo[indice] == null || percorrer.filhosDoNo[indice].getLetra() != charSufixo[i]) {
+                        System.out.println("O sufixo [" + sufixo + "] não existe na árvore.");
+                        return;
+                    }
+                    percorrer = percorrer.filhosDoNo[indice];
+                }
+                System.out.println("Palavras terminadas em [" + new StringBuilder(sufixo).reverse().toString() + "]");
+                exibirPalavrasSufixo("", new StringBuilder(sufixo).toString(), percorrer);
+            } else {
+                System.out.println("O sufixo [" + sufixo + "] possui algum número ou caractere especial. Utilize apenas letras.");
             }
-            for (No_Trie noFilho : percorrer.filhosDoNo[indice].filhosDoNo) {
-                if (noFilho != null) {
-                    return false;
+        } else {
+            System.out.println("A árvore não está configurada para reverso. Utilize o método exibirPalavrasPrefixo.");
+        }
+    }
+
+    private void exibirPalavrasSufixo(String sufixo, String palavraParcial, No_Trie percorrer) {
+        if (percorrer != null) {
+            if (percorrer.isFimDePalavra()) {
+                String palavraOriginal = new StringBuilder(palavraParcial).reverse().toString();
+                System.out.println("[" + palavraOriginal + "]");
+            }
+            for (int i = 0; i < 26; i++) {
+                if (percorrer.filhosDoNo[i] != null) {
+                    exibirPalavrasSufixo(sufixo, palavraParcial + percorrer.filhosDoNo[i].getLetra(), percorrer.filhosDoNo[i]);
                 }
             }
         }
-        return true;
     }
 
-    private boolean verificaNumeros(String palavra) {
-        return !palavra.matches(".*\\d.*");
-    }
 
-    public int getQuantidadeDePalavras() {
-        return quantidadeDePalavras;
-    }
+    private boolean verificaFilhos (No_Trie percorrer,int indice){
+            if (percorrer != null) {
+                if (percorrer.filhosDoNo[indice].isFimDePalavra()) {
+                    return false;
+                }
+                for (No_Trie noFilho : percorrer.filhosDoNo[indice].filhosDoNo) {
+                    if (noFilho != null) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        private boolean verificaNumeros (String palavra){
+            return !palavra.matches(".*\\d.*");
+        }
+
+        public int getQuantidadeDePalavras () {
+            return quantidadeDePalavras;
+        }
 }
