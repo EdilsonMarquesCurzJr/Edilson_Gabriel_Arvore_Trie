@@ -32,7 +32,6 @@ amitriptilina
 ranitidina
 cetirizina
 alprazolam
-cloridrato de venlafaxina
 clorpropamida
 buspirona
 gliclazida
@@ -80,7 +79,6 @@ lidocaína
 rivaroxabano
 risperidona
 cloroquina
-acido acetilsalicilico
 prednisona
 glibenclamida
 quetiapina

@@ -81,7 +81,10 @@ public class ArvoreTrie {
                         percorrer = percorrer.filhosDoNo[indice];
                     }
                 }
-                System.out.println("[" + palavraRemover + "] removido/alterado com sucesso.");
+                if (!revers){
+                    System.out.println("[" + palavraRemover + "] removido/alterado com sucesso.");
+                }
+
                 this.quantidadeDePalavras--;
             } else {
                 System.out.println("A palavra [" + palavraRemover + "] não está presente na árvore.");

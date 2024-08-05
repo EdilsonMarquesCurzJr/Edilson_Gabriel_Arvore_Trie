@@ -16,7 +16,7 @@ public class Main {
         Scanner scan = new Scanner(System.in);
 
         // Variável representativa da escolha do usuário
-        int escolha = 0;
+        int escolha;
 
         // Palavra a ser inserida
         String palavra;
@@ -69,12 +69,14 @@ public class Main {
                     System.out.println("Informe o prefixo:");
                     palavra = scan.nextLine();
                     arvoreNormal.exibirPalavrasPrefixo(palavra);
+                    System.out.println("\n\n\n");
                     break;
 
                 case 3:// BUSCA POR SUFIXO
                     System.out.println("Informe o sufixo: ");
                     palavra = scan.nextLine();
                     arvoreInvertida.exibirPalavrasSufixo(palavra);
+                    System.out.println("\n\n\n");
                     break;
 
                 case 4: //INSERIR
@@ -83,6 +85,7 @@ public class Main {
                     palavra = palavra.toLowerCase();
                     arvoreNormal.inserirElemento(palavra);
                     arvoreInvertida.inserirElemento(palavra);
+                    System.out.println("\n\n\n");
                     break;
 
                 case 5: // DELETAR
@@ -91,6 +94,7 @@ public class Main {
                     arvoreNormal.removerElemento(palavra);
                     palavra = new StringBuilder(palavra).reverse().toString();
                     arvoreInvertida.removerElemento(palavra);
+                    System.out.println("\n\n\n");
 
                 default:
                     System.out.println("Opção inválida. Tente novamente.");
