@@ -5,11 +5,10 @@ package ArvoreTrie;
 public class No_Trie {
     //Atributos da classe:
     private char letra; // A informação que será armazenada nessa árvore é apenas uma letra.
-    public No_Trie filhosDoNo[] = new No_Trie[26];; //Cada nó terá no MÁXIMO 26 filhos que representam o alfabeto de A-Z;
+    public No_Trie filhosDoNo[] = new No_Trie[26]; //Cada nó terá no MÁXIMO 26 filhos que representam o alfabeto de A-Z;
     //Aqui modificamos o vetor de nós filhos deste nó para o tamanho 26(tamanho do alfabeto tradicional)
     private boolean fimDePalavra; //Um atributo booleano para indicar se a letra em questão representa o fim de uma palavra;
     //Ex: A->M->O->R Nesse caso, a letra R representa o fim da palavra amor.
-    private boolean IsReverso; // Um atributo booleano para salvar o contrário da palavra
 
     //Método construtor:
 

@@ -71,7 +71,6 @@ terazosina
 enoxaparina
 omeprazol
 ciclofosfamida
-cloridrato de metformina
 levofloxacino
 bromoprida
 loperamida

@@ -127,7 +127,6 @@ public class ArvoreTrie {
     }
 
     public void exibirPalavras() {
-        System.out.println("Imprimindo palavras da árvore:");
         exibirPalavras(this.raiz, "");
     }
 
